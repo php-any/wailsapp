@@ -1,0 +1,34 @@
+namespace test;
+
+use wails\application\new;
+use wails\application\newMenu;
+use wails\application\Options;
+use wails\application\WebviewWindowOptions;
+use wails\application\MacOptions;
+
+$app = new(Options {
+    Name: "test",
+    Description: "A demo of the menu system",
+    Mac: MacOptions {
+        ApplicationShouldTerminateAfterLastWindowClosed: true,
+    },
+});
+
+$menu = newMenu();
+$menu->addRole(1); // mac 系统才需执行
+$myMenu = $menu->addSubmenu("Demo");
+$myMenu->add("Open")->onClick(() => {
+    echo "ok";
+});
+
+$app->Window->newWithOptions(WebviewWindowOptions{
+    URL:    "https://github.com/php-any/origami",
+    DevToolsEnabled: true,
+})->setTitle("Test")->setMenu($menu);
+
+
+$app->Menu->set(menu);
+
+$app->run();
+
+
